@@ -1,0 +1,18 @@
+{
+  // Silence built-in CSS linter errors for Tailwind directives
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+
+  // Make sure the Tailwind server uses the correct config
+  "tailwindCSS.experimental.configFile": "web/tailwind.config.js",
+
+  // Helpful editor defaults
+  "tailwindCSS.emmetCompletions": true,
+  "editor.quickSuggestions": { "strings": true },
+
+  // Associate common files (optional)
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html"
+  }
+}

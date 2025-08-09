@@ -1,0 +1,54 @@
+{
+  "name": "fern",
+  "version": "0.1.0",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:backend": "pyinstaller --clean --noconfirm --onefile --name backend --distpath ../backend/bin ../backend/entry.py",
+    "predist": "npm run build:backend && cd ../web && npm run build",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^31.2.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.fern.chatui",
+    "productName": "Fern",
+    "files": [
+      "main.js",
+      "../backend/**",
+      "../web/dist/**",
+      "../Assets/**",
+      "../requirements.txt",
+      "../.venv/**"
+    ],
+    "asarUnpack": [
+      "backend/**",
+      ".venv/**"
+    ],
+    "directories": {
+      "buildResources": "../Assets/Logo"
+    },
+    "extraResources": [
+      { "from": "../web/dist", "to": "web/dist" },
+      { "from": "../backend/bin", "to": "backend/bin" }
+    ],
+    "win": {
+      "target": ["portable", "zip"],
+      "icon": "../Assets/Logo/fern-logo.ico",
+      "signingHashAlgorithms": [],
+      "signAndEditExecutable": false
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "../Assets/Logo/fern.icns"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "icon": "../Assets/Logo"
+    }
+  }
+}

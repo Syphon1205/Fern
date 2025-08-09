@@ -1,0 +1,303 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #3b82f6; /* default */
+  --accent-dark: #2563eb;
+}
+
+/* color-scheme is applied per theme to improve form controls and native UI */
+body.theme-dark { color-scheme: dark; }
+body.theme-light { color-scheme: light; }
+
+body {
+  @apply text-slate-100;
+  /* Black gradient background */
+  background: radial-gradient(1000px 600px at 20% -10%, rgba(59,130,246,0.08), transparent),
+              radial-gradient(900px 500px at 80% 0%, rgba(147,197,253,0.06), transparent),
+              linear-gradient(180deg, #020617 0%, #000000 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  font-size: calc(16px * var(--font-scale, 1));
+}
+
+@keyframes bg-pan {
+  0% { background-position: 0% 0%, 100% 0%, 50% 0%; }
+  50% { background-position: 100% 50%, 0% 50%, 50% 100%; }
+  100% { background-position: 0% 0%, 100% 0%, 50% 0%; }
+}
+
+/* Aceternity-like Animated Background Overlay */
+.gradient-ambient {
+  position: absolute;
+  inset: -20%;
+  filter: blur(45px);
+  opacity: 0.95;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  /* Increased circles: 8 layered radial gradients with varied sizes/positions */
+  background:
+    radial-gradient(38% 28% at 18% 18%, color-mix(in oklab, var(--accent) 75%, transparent) 0%, transparent 70%),
+    radial-gradient(28% 22% at 80% 12%, color-mix(in oklab, var(--accent) 58%, transparent) 0%, transparent 70%),
+    radial-gradient(34% 28% at 54% 88%, color-mix(in oklab, var(--accent-dark) 70%, transparent) 0%, transparent 72%),
+    radial-gradient(20% 18% at 10% 70%, color-mix(in oklab, var(--accent) 52%, transparent) 0%, transparent 75%),
+    radial-gradient(22% 20% at 88% 60%, color-mix(in oklab, var(--accent-dark) 58%, transparent) 0%, transparent 75%),
+    radial-gradient(18% 16% at 65% 25%, color-mix(in oklab, var(--accent) 46%, transparent) 0%, transparent 78%),
+    radial-gradient(16% 14% at 35% 35%, color-mix(in oklab, var(--accent-dark) 48%, transparent) 0%, transparent 80%),
+    radial-gradient(14% 12% at 50% 10%, color-mix(in oklab, var(--accent) 42%, transparent) 0%, transparent 82%);
+  animation: gradient-drift 28s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(5%, -3%, 0) scale(1.05); }
+  100% { transform: translate3d(-6%, 4%, 0) scale(1.02); }
+}
+
+/* Accent buttons (dynamic via CSS variables) */
+.btn-primary { @apply text-white rounded-md px-4 py-2 disabled:opacity-50; background-color: var(--accent); }
+.btn-primary:hover { background-color: var(--accent-dark); }
+
+/* Accent background utility (for avatars/icons) */
+.bg-accent { background-color: var(--accent) !important; }
+.hover\:bg-accent-dark:hover { background-color: var(--accent-dark) !important; }
+
+/* Liquid glass look for cards/bars */
+.glass {
+  @apply bg-slate-900/40 border border-white/10 backdrop-blur;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* Subtle separators */
+.divider {
+  @apply border-t border-white/10;
+}
+
+/* Light theme override */
+body.theme-light {
+  @apply text-slate-900;
+  background: radial-gradient(1000px 600px at 20% -10%, rgba(59,130,246,0.12), transparent),
+              radial-gradient(900px 500px at 80% 0%, rgba(59,130,246,0.08), transparent),
+              linear-gradient(180deg, #eef2ff 0%, #ffffff 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+}
+body.theme-light .glass {
+  @apply bg-white/70 border-slate-200; 
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+}
+body.theme-light .btn-primary { @apply text-white; }
+body.theme-light .divider { @apply border-slate-200; }
+
+/* Density controls */
+.density-compact .glass { @apply py-1; }
+.density-compact .btn-primary { @apply px-3 py-1.5; }
+.density-compact textarea { @apply h-10; }
+
+/* Header/toolbar styling (match classic look) */
+header .toolbar {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+header .toolbar select {
+  @apply bg-slate-800/60 border border-white/10 text-slate-200 rounded-md px-2 py-1;
+}
+header .toolbar .ghost-btn {
+  @apply bg-transparent border border-white/10 text-slate-200 rounded-md px-3 py-1 hover:bg-white/10;
+}
+header .toolbar .switch input {
+  margin-right: 6px;
+}
+
+/* Grouped pill container to avoid vertical stacking */
+.toolbar-group {
+  display: inline-flex !important;
+  align-items: center;
+  gap: .5rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(15,23,42,0.45);
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
+/* Keep each control from expanding and breaking lines */
+.toolbar-group > * { flex: 0 0 auto; }
+.toolbar-group select { display: inline-block; width: auto; max-width: 18rem; }
+.toolbar-group label { display: inline-flex; align-items: center; white-space: nowrap; }
+.toolbar-group .ghost-btn { display: inline-flex; align-items: center; }
+
+/* App title gradient like original */
+.title-gradient {
+  background: linear-gradient(90deg, #e5e7eb 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Make controls compact and aligned */
+header .toolbar select,
+header .toolbar .ghost-btn {
+  height: 32px;
+}
+
+/* Additional Themes */
+/* Pure black background with white UI */
+body.theme-blackwhite {
+  color-scheme: dark;
+  @apply text-white;
+  background: #000;
+  --accent: #ffffff;
+  --accent-dark: #d1d5db;
+}
+
+/* Midnight: deep navy with subtle blue glow */
+body.theme-midnight {
+  color-scheme: dark;
+  @apply text-slate-100;
+  background: radial-gradient(800px 500px at 20% -10%, rgba(37,99,235,0.10), transparent),
+              radial-gradient(600px 400px at 80% 10%, rgba(59,130,246,0.08), transparent),
+              linear-gradient(180deg, #0b1220 0%, #05070e 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #60a5fa;
+  --accent-dark: #3b82f6;
+}
+
+/* High Contrast: black background, bright yellow accents */
+body.theme-highcontrast {
+  color-scheme: dark;
+  @apply text-white;
+  background: #000;
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #facc15; /* amber-400 */
+  --accent-dark: #eab308; /* amber-500 */
+}
+
+/* Ruby: deep red tones */
+body.theme-ruby {
+  color-scheme: dark;
+  @apply text-rose-50;
+  background: radial-gradient(900px 500px at 80% 0%, rgba(244,63,94,0.12), transparent),
+              linear-gradient(180deg, #1a0b0e 0%, #0a0506 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #ef4444; /* red-500 */
+  --accent-dark: #b91c1c; /* red-700 */
+}
+
+/* Ocean: blues/teals */
+body.theme-ocean {
+  color-scheme: dark;
+  @apply text-slate-100;
+  background: radial-gradient(900px 500px at 20% -10%, rgba(6,182,212,0.12), transparent),
+              linear-gradient(180deg, #031b27 0%, #010d12 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #06b6d4; /* cyan-500 */
+  --accent-dark: #0891b2; /* cyan-600 */
+}
+
+/* Magma: dark with orange glow */
+body.theme-magma {
+  color-scheme: dark;
+  @apply text-amber-50;
+  background: radial-gradient(900px 500px at 80% 0%, rgba(249,115,22,0.12), transparent),
+              linear-gradient(180deg, #1a0f07 0%, #0b0603 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #f97316; /* orange-500 */
+  --accent-dark: #ea580c; /* orange-600 */
+}
+
+/* Sea Green */
+body.theme-seagreen {
+  color-scheme: dark;
+  @apply text-emerald-50;
+  background: radial-gradient(900px 500px at 10% -10%, rgba(16,185,129,0.12), transparent),
+              linear-gradient(180deg, #041611 0%, #020b08 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #10b981; /* emerald-500 */
+  --accent-dark: #059669; /* emerald-600 */
+}
+
+/* AI Model Themed */
+body.theme-openai {
+  color-scheme: dark;
+  @apply text-slate-100;
+  background: #000; /* black & white ChatGPT theme */
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #ffffff;
+  --accent-dark: #d1d5db;
+}
+body.theme-gemini {
+  color-scheme: dark;
+  @apply text-slate-100;
+  background: radial-gradient(900px 500px at 80% 0%, rgba(75,121,247,0.14), transparent),
+              linear-gradient(180deg, #0b1230 0%, #070b1f 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #4B79F7; /* Gemini blue */
+  --accent-dark: #3A64D6;
+}
+body.theme-anthropic {
+  color-scheme: dark;
+  @apply text-slate-100;
+  background: radial-gradient(900px 500px at 10% -10%, rgba(193,95,60,0.12), transparent),
+              linear-gradient(180deg, #1a0f0b 0%, #0c0705 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #C15F3C; /* Claude rust */
+  --accent-dark: #9E4B30;
+}
+body.theme-perplexity {
+  color-scheme: dark;
+  @apply text-white;
+  background: radial-gradient(900px 500px at 20% -10%, rgba(0,179,255,0.08), transparent),
+              linear-gradient(180deg, #000000 0%, #091717 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #00B3FF; /* Perplexity cyan */
+  --accent-dark: #008FCC;
+}
+
+/* Fern Dark: green on black */
+body.theme-ferndark {
+  color-scheme: dark;
+  @apply text-emerald-50;
+  background: radial-gradient(900px 500px at 15% -10%, rgba(16,185,129,0.14), transparent),
+              radial-gradient(700px 400px at 85% 10%, rgba(52,211,153,0.10), transparent),
+              linear-gradient(180deg, #030a07 0%, #000000 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #10b981; /* emerald-500 */
+  --accent-dark: #059669; /* emerald-600 */
+}
+
+/* Fern Light: green accents on white */
+body.theme-fernlight {
+  color-scheme: light;
+  @apply text-slate-900;
+  background: radial-gradient(1000px 600px at 20% -10%, rgba(16,185,129,0.12), transparent),
+              radial-gradient(900px 500px at 80% 0%, rgba(52,211,153,0.10), transparent),
+              linear-gradient(180deg, #f2fcf7 0%, #ffffff 100%);
+  background-size: 200% 200%;
+  animation: bg-pan 40s ease-in-out infinite;
+  --accent: #059669; /* emerald-600 */
+  --accent-dark: #047857; /* emerald-700 */
+}
+
+/* Light-like card overrides for Fern Light */
+body.theme-fernlight .glass {
+  @apply bg-white/70 border-slate-200;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+}
+body.theme-fernlight .divider { @apply border-slate-200; }
