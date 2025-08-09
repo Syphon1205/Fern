@@ -83,7 +83,7 @@ You can also paste keys in the __Settings__ dialog in the app.
 
 ---
 
-## 📦 Package Desktop App
+## 📦 Package Desktop App (Electron)
 Fern uses `electron-builder` for packaging.
 
 1) Ensure the web UI is built:
