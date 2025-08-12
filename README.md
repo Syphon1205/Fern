@@ -13,7 +13,7 @@ Elegant, streaming chat UI for multiple AI providers. Built with FastAPI (backen
 
 </div>
 
-<img width="1402" height="757" alt="Screenshot 2025-08-10 063251" src="https://github.com/user-attachments/assets/7417a79f-3326-4726-b432-e1ba450e6066" />
+<img width="1773" height="850" alt="image" src="https://github.com/user-attachments/assets/d3fee9f5-00d2-40a0-a2d9-83be503633ba" />
 
 
 ---
